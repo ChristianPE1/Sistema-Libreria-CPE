@@ -2,6 +2,7 @@ from rest_framework import generics,permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.generics import ListAPIView
+from rest_framework.exceptions import PermissionDenied
 from books.models import Book
 from .models import BookRequest
 from .serializers import BookRequestSerializer
@@ -46,7 +47,7 @@ class BiblioRequestView(ListAPIView):
          # Mostrar solo solicitudes de copias pendientes
          return BookRequest.objects.filter(request_type='loan', status='pending').order_by('-request_date')
       
-      return Response({"error": "Rol no autorizado para esta acción."}, status=403)
+      raise PermissionDenied("Rol no autorizado para esta acción.")
 
 class CreateCopiesRequest(APIView):
    permission_classes = [permissions.IsAuthenticated]
@@ -84,8 +85,8 @@ class UserRequestView(ListAPIView):
       user = self.request.user
       if user.is_usuario():
          return BookRequest.objects.filter(user=user).order_by('-request_date')
-      return Response({"error": "Rol no autorizado para esta acción."}, status=403)
-      
+      raise PermissionDenied("Rol no autorizado para esta acción.")
+   
 class UpdateLoanRequestStatus(APIView):
    permission_classes = [permissions.IsAuthenticated]
 
@@ -119,7 +120,7 @@ class AdminCopiesRequestListView(ListAPIView):
 
       if user.is_admin():
          return BookRequest.objects.filter(status='pending', request_type='copies').order_by('-request_date')
-      return Response({"error": "Rol no autorizado para esta acción."}, status=403)
+      raise PermissionDenied("Rol no autorizado para esta acción.")
       
 class UpdateCopiesRequests(APIView):
    permission_classes = [permissions.IsAuthenticated]

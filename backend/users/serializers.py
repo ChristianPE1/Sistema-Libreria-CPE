@@ -1,7 +1,15 @@
 from rest_framework import serializers
 from .models import CustomUser
-from rest_framework_simplejwt.tokens import RefreshToken, TokenError
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
+
+class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
+   @classmethod
+   def get_token(cls, user):
+      token = super().get_token(user)
+      token['role'] = user.role
+      return token
 
 class CustomUserSerializer(serializers.ModelSerializer):
    class Meta:
@@ -25,10 +33,11 @@ class CustomUserLoginSerializer(serializers.Serializer):
 
 
    def get_tokens(self,user):
-      refresh = RefreshToken.for_user(user)
+      #refresh = RefreshToken.for_user(user)
+      token = CustomTokenObtainPairSerializer.get_token(user)
       return {
-         'refresh': str(refresh),
-         'access': str(refresh.access_token)
+         'refresh': str(token),
+         'access': str(token.access_token)
       }
       
 
