@@ -74,7 +74,7 @@ export default function Books() {
                   <p className="availability">
                      <strong>Available Copies:</strong> {book.available_copies}
                   </p>
-                  <Link to={`/book/${book.id}`} className="view-button">
+                  <Link to={`/books/${book.id}`} className="view-button">
                      View Details
                   </Link>
                </div>

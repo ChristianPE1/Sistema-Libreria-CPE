@@ -7,6 +7,7 @@ import Register from './pages/AuthPages/RegisterForm'
 import NotFound from './pages/NotFound'
 import ProtectedRoute from './components/ProtectedRoute'
 import MyRequests from './pages/RequestPages/MyRequests'
+import BookPage from './pages/BooksPages/BookPage'
 
 function Logout () {
   localStorage.clear()
@@ -27,11 +28,12 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/logout" element={<Logout />} />
           <Route path="/register" element={<RegisterLogout />} /> 
+          <Route path="/books/:id" element={<BookPage />} />
           <Route path="*" element={<NotFound />} />
           <Route path="/my-requests" element={
             <ProtectedRoute allowedRoles={['usuario']}>
               <MyRequests />
-            </ProtectedRoute>} />
+            </ProtectedRoute>}/>
         </Routes>
       </Router>
     </>
