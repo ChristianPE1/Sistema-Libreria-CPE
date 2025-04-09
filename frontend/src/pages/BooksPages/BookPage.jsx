@@ -1,10 +1,10 @@
-import {useParams} from 'react-router-dom';
-import { useEffect,useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import api from '../../api/api';
 
 export default function BookPage() {
 
-   const {id} = useParams();
+   const { id } = useParams();
    const [book, setBook] = useState(null);
    const [loading, setLoading] = useState(true);
 
@@ -14,8 +14,9 @@ export default function BookPage() {
          const response = await api.get(`/api/books/${id}/`);
          setBook(response.data);
          setLoading(false);
+         console.log(response.data);
       } catch (error) {
-         console.error('Error fetching book:',error);
+         console.error('Error fetching book:', error);
       }
    }
 
@@ -23,15 +24,17 @@ export default function BookPage() {
       fetchBook(id);
    }, [id]);
 
-   if(loading){
+   if (loading) {
       return <div>Loading book...</div>
    }
 
 
    return (
-      <div className='text-white'>
+      <div className='text-white flex flex-col'>
          <h1 className='text-4xl font-bold'>{book.title}</h1>
-         <p>This is the book page.</p>
+         <p className='text-xl'>Autor: {book.author}</p>
+         <p className='text-base'>Copies available: {book.co}</p>
+
       </div>
    );
 }
