@@ -42,9 +42,17 @@ export default function Login() {
          alert('Error: ' + error.message);
       }
    }
-   const demoCredentials = () => {
-      setEmail('user@example.com');
-      setPassword('123');
+   const demoCredentials = (typeUser) => {
+      if(typeUser === "user"){
+         setEmail('user@example.com');
+         setPassword('123');
+      } else if(typeUser === "bibliotecario"){
+         setEmail('bib@example.com')
+         setPassword('123');
+      } else if(typeUser === "admin"){
+         setEmail('admin@example.com')
+         setPassword('123');
+      }
    };
 
    return (
@@ -67,12 +75,27 @@ export default function Login() {
                required
                className='border-2 border-gray-300 rounded-md p-2'
             />
-            <div className="flex gap-4">
+            <div className="flex gap-4 flex-col">
                <button type="submit" disabled={loading}>
                   {loading ? 'Logging in...' : 'Login'}
                </button>
-               <button type="button" onClick={demoCredentials} className="bg-gray-200 p-2 rounded-md">
-                  Fill Demo Credentials
+               <button
+               type="button"
+               onClick={() => demoCredentials("user")}
+               className="bg-gray-200 p-2 rounded-md">
+                  Fill Demo User
+               </button>
+               <button
+               type="button"
+               onClick={() => demoCredentials("bibliotecario")}
+               className="bg-gray-200 p-2 rounded-md">
+                  Fill Demo Bibliotecario
+               </button>
+               <button
+               type="button"
+               onClick={() => demoCredentials("admin")}
+               className="bg-gray-200 p-2 rounded-md">
+                  Fill Demo Admin
                </button>
             </div>
          </form>

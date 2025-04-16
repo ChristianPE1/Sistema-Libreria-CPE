@@ -20,6 +20,7 @@ export default function BookPage() {
       }
    }
 
+
    useEffect(() => {
       fetchBook(id);
    }, [id]);
@@ -32,9 +33,10 @@ export default function BookPage() {
    return (
       <div className='text-white flex flex-col'>
          <h1 className='text-4xl font-bold'>{book.title}</h1>
-         <p className='text-xl'>Autor: {book.author}</p>
-         <p className='text-base'>Copies available: {book.co}</p>
-
+         <p className='text-xl'>Autor: {book.author} - {book.year}</p>
+         <p className='text-base'>Copies available: {book.available_copies}</p>
+         <p className='text-base'>Description: {book.description}</p>
+         <p className='text-base'>Genre: {book.genre}</p>
       </div>
    );
 }

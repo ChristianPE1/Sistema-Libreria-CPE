@@ -8,6 +8,8 @@ import NotFound from './pages/NotFound'
 import ProtectedRoute from './components/ProtectedRoute'
 import MyRequests from './pages/RequestPages/MyRequests'
 import BookPage from './pages/BooksPages/BookPage'
+import RequestPage from './pages/RequestPages/RequestPage'
+import RequestsCopies from './pages/RequestPages/RequestsCopies'
 
 function Logout () {
   localStorage.clear()
@@ -34,6 +36,14 @@ function App() {
             <ProtectedRoute allowedRoles={['usuario']}>
               <MyRequests />
             </ProtectedRoute>}/>
+          <Route path="/requests" element={
+            <ProtectedRoute allowedRoles={['bibliotecario']}>
+              <RequestPage />
+            </ProtectedRoute>}/>
+            <Route path="/requests-copies" element={
+              <ProtectedRoute allowedRoles={['admin']}>
+                <RequestsCopies />
+              </ProtectedRoute>}/>
         </Routes>
       </Router>
     </>
