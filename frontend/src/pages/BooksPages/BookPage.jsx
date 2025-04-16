@@ -37,6 +37,16 @@ export default function BookPage() {
          <p className='text-base'>Copies available: {book.available_copies}</p>
          <p className='text-base'>Description: {book.description}</p>
          <p className='text-base'>Genre: {book.genre}</p>
+
+         {/* Input para seleccionar la fecha */}
+         <label htmlFor="request-date" className='text-base mt-4'>Select a date to request the book:</label>
+         <input
+            type="date"
+            id="request-date"
+            className='bg-gray-800 text-white px-4 py-2 rounded mt-2'
+         />
+
+         <button className='bg-blue-500 text-white px-4 py-2 rounded mt-4'>Solicitar copia</button>
       </div>
    );
 }
