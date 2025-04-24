@@ -1,0 +1,42 @@
+import { Link } from 'react-router-dom';
+import { ACCESS_TOKEN } from '../constants';
+import { useEffect, useCallback } from 'react';
+import { useState } from 'react';
+
+
+export default function NavBar() {
+
+   const tokenAccess = localStorage.getItem(ACCESS_TOKEN);
+   const [isLogged, setIsLogged] = useState(false);
+   const [role, setRole] = useState(null);
+
+   const checkLoginStatus = useCallback(() => {
+      if (tokenAccess) {
+         setIsLogged(true);
+         const decodedToken = JSON.parse(atob(tokenAccess.split('.')[1]));
+         setRole(decodedToken.role);
+      } else {
+         setIsLogged(false);
+         setRole(null);
+      }
+   },[tokenAccess]);
+
+   useEffect(() => {
+      checkLoginStatus();
+   }, [checkLoginStatus]);
+
+   return(
+      <nav className='bg-gray-800 p-4 text-white flex justify-between items-center w-full'>
+         <div>
+            <Link to='/' className='font-bold text-3xl'>Biblioteca Virtual</Link>
+            {isLogged && <span className='text-sm ml-4'>Welcome, {role}</span>}
+            {isLogged && <Link to='/logout' className='text-sm ml-4'>Logout</Link>}
+            {!isLogged && <Link to='/login' className='text-sm ml-4'>Login</Link>}
+            {!isLogged && <Link to='/register' className='text-sm ml-4'>Register</Link>}
+            {role === 'usuario' && <Link to='/my-requests' className='text-sm ml-4'>My Requests</Link>}
+            {role === 'bibliotecario' && <Link to='/requests' className='text-sm ml-4'>Requests</Link>}
+            {role === 'admin' && <Link to='/requests-copies' className='text-sm ml-4'>Requests Copies</Link>}
+         </div>
+      </nav>
+   );
+}

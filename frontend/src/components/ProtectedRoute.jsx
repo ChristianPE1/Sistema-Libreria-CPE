@@ -81,6 +81,7 @@ export default function ProtectedRoute({ children,allowedRoles }) {
          console.log('Role from token:', role);
          setUserRole(role);
    
+   
          console.log('Permiso de acceso:', allowedRoles.includes(role));
          setIsAuth(allowedRoles.includes(role));
          setIsLoading(false);
@@ -97,7 +98,7 @@ export default function ProtectedRoute({ children,allowedRoles }) {
    }, [auth]);
 
    if (isLoading) {
-
+      console.log('User role:', userRole);
       return <div>Loading...</div>
    }
    return isAuth ? children : <Navigate to="/login" />;
