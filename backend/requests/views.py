@@ -23,13 +23,21 @@ class CreateBookRequest(APIView):
       except Book.DoesNotExist:
          return Response({"error": "El libro no existe."}, status=404)
 
+      # Validar days_requested
+      try:
+         days_requested = int(request.data.get('days_requested', 0))
+         if days_requested <= 0:
+            return Response({"error": "El número de días solicitados debe ser mayor que cero."}, status=400)
+      except ValueError:
+         return Response({"error": "El número de días solicitados debe ser un número entero."}, status=400)
+
       # Crear la solicitud
       book_request = BookRequest.objects.create(
          user=user,
          book=book,
          request_type='loan',
          status='pending',
-         return_date=request.data.get('return_date')  # Validar si se incluye una fecha
+         days_requested = int(days_requested)
       )
 
       return Response({"message": "Solicitud creada con éxito.", "request_id": book_request.id}, status=201)

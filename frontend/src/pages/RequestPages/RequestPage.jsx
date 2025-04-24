@@ -55,6 +55,16 @@ export default function RequestPage() {
       return <div>Loading...</div>
    }
 
+   const acceptRequest = async (requestId, requestStatus) => {
+      try {
+         const response = await api.patch(`/api/requests/${requestId}/update/`, { status: requestStatus });
+         console.log('Request updated:', response.data);
+         fetchRequests();
+      } catch (error) {
+         console.error("error in the request:", error)
+      }
+   }
+
    return (
       <div className='text-white'>
          <h1 className='text-6xl'>Request Page</h1>
@@ -64,13 +74,31 @@ export default function RequestPage() {
                <p className='text-xl'>Status: {request.status}</p>
                <p className='text-xl'>Requested by: {request.user.username}</p>
                <p className='text-xl'>Request Date: {new Date(request.request_date).toLocaleDateString()}</p>
-               <p className='text-xl'>Return Date: {new Date(request.return_date).toLocaleDateString()}</p>
+               <p className='text-xl'>Days requested: {request.days_requested}</p>
+               {request.status === 'pending' && (
+                  <div>
+                     <button 
+                        className='bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-2'
+                        onClick={() => acceptRequest(request.id, 'approved')}
+                     >
+                        Aprobar
+                     </button>
+                     <button
+                        className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded'
+                        onClick={() => acceptRequest(request.id, 'rejected')}
+                     >
+                        Rechazar
+                     </button>
+                  </div>
+               )
+               }
             </div>
          ))}
          <div className="pagination-controls">
             <button
                onClick={() => handlePageChange(pagination.previous)}
                disabled={!pagination.previous}
+               className='bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-xl mr-2'
             >
                Previous
             </button>
@@ -80,6 +108,7 @@ export default function RequestPage() {
             <button
                onClick={() => handlePageChange(pagination.next)}
                disabled={!pagination.next}
+               className='bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-xl ml-2'
             >
                Next
             </button>

@@ -74,7 +74,7 @@ export default function Books() {
             <Link to="/register" className="p-3 border rounded-md border-gray-200">Register</Link>
          </header>
          <form className="max-w-md mx-auto" onSubmit={handleSearch}>
-            <label htmlFor="default-search" className=" text-sm font-medium text-gray-900">Search</label>
+            <label htmlFor="default-search" className="font-medium text-gray-900">Search</label>
             <div className="relative">
                <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
                   <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
@@ -91,7 +91,7 @@ export default function Books() {
                   onChange={(e) => setSearch(e.target.value)}
                   required
                   />
-                  <button type="submit" className="text-white absolute bg-blue-700">Search</button>
+                  <button type="submit" className="py-2 px-3 cursor-pointer rounded-xl text-white absolute bg-blue-700">Search</button>
                </div>
             </div>
          </form>
@@ -106,7 +106,7 @@ export default function Books() {
                   <p className="availability">
                      <strong>Available Copies:</strong> {book.available_copies}
                   </p>
-                  <Link to={`/books/${book.id}`} className="view-button">
+                  <Link to={`/books/${book.id}`} className="text-blue-600 ">
                      View Details
                   </Link>
                </div>
@@ -118,6 +118,7 @@ export default function Books() {
             <button
                onClick={() => handlePageChange(pagination.previous)}
                disabled={!pagination.previous}
+               className='cursor-pointer bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-xl ml-2'
             >
                Previous
             </button>
@@ -127,6 +128,7 @@ export default function Books() {
             <button
                onClick={() => handlePageChange(pagination.next)}
                disabled={!pagination.next}
+               className='cursor-pointer bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-xl ml-2'
             >
                Next
             </button>

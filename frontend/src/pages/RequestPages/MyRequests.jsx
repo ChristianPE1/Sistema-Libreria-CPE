@@ -22,17 +22,18 @@ export default function MyRequests() {
          setRequests(response.data.results);
          setPagination({
             count: response.data.count,
-            nxt: response.data.next,
+            next: response.data.next,
             previous: response.data.previous,
-            currentpage: getPageNumberFromUrl(url) || 1
+            currentPage: getPageNumberFromUrl(url) || 1
          })
+         console.log('Requests:', response.data.results);
       } catch (error) {
          console.error('Error fetching requests:', error);
       }
    },[]);
 
    const getPageNumberFromUrl = (url) =>{
-      if(!url) return;
+      if(!url) return 1;
       const match = url.match(/page=(\d+)/);
       return match ? parseInt(match[1]) : 1;
    }
@@ -76,6 +77,7 @@ export default function MyRequests() {
             <button
                onClick={() => handlePageChange(pagination.previous)}
                disabled={!pagination.previous}
+               className='bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-xl ml-2'
             >
                Previous
             </button>
@@ -85,6 +87,7 @@ export default function MyRequests() {
             <button
                onClick={() => handlePageChange(pagination.next)}
                disabled={!pagination.next}
+               className='bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-xl ml-2'
             >
                Next
             </button>

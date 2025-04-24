@@ -7,6 +7,8 @@ export default function BookPage() {
    const { id } = useParams();
    const [book, setBook] = useState(null);
    const [loading, setLoading] = useState(true);
+   const [daysRequested, setDaysRequested] = useState(0);
+   
 
    const fetchBook = async (id) => {
       setLoading(true);
@@ -17,6 +19,23 @@ export default function BookPage() {
          console.log(response.data);
       } catch (error) {
          console.error('Error fetching book:', error);
+      }
+   }
+
+   const requestBook = async (id) => {
+      if(daysRequested <= 0) {
+         console.error('Days requested must be greater than 0');
+         return;
+      }
+      try {
+         const response = await api.post(`/api/books/${id}/request/`, {
+            days_requested: daysRequested,
+         });
+         console.log('Book requested successfully:', response.data);
+         
+      } catch (error) {
+         console.error('Error requesting book:', error);
+
       }
    }
 
@@ -37,6 +56,25 @@ export default function BookPage() {
          <p className='text-base'>Copies available: {book.available_copies}</p>
          <p className='text-base'>Description: {book.description}</p>
          <p className='text-base'>Genre: {book.genre}</p>
+
+         <div className='my-4'>
+            <label className='block mb-2'>Selecciona fecha de devolución:</label>
+            <input
+               type='number'
+               value={daysRequested}
+               onChange={(e) => setDaysRequested(e.target.value)}
+               className='border border-gray-300 rounded px-4 py-2'
+               placeholder='Días solicitados'
+               
+            />
+            <button
+               onClick={() => requestBook(id)}
+               className='ml-4 bg-blue-600 hover:bg-blue-800 text-white px-4 py-2 rounded'
+            >
+               Solicitar Libro
+            </button>
+         </div>
+
       </div>
    );
 }

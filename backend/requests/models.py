@@ -22,7 +22,7 @@ class BookRequest(models.Model):
       request_date = models.DateTimeField(auto_now_add=True)
       status = models.CharField(max_length=100,choices=STATUS_CHOICES,default='Pending')
       request_type = models.CharField(max_length=100,choices=REQUEST_TYPE_CHOICES,default='loan')
-      return_date = models.DateTimeField(blank=True, null=True)
+      days_requested = models.PositiveIntegerField(null=True, blank=True)
       copies_requested = models.PositiveIntegerField(null=True, blank=True)
 
       def __str__(self):

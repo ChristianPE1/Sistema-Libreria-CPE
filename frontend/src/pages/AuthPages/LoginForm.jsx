@@ -76,25 +76,29 @@ export default function Login() {
                className='border-2 border-gray-300 rounded-md p-2'
             />
             <div className="flex gap-4 flex-col">
-               <button type="submit" disabled={loading}>
+               <button
+               type="submit"
+               disabled={loading}
+               className='bg-slate-600 cursor-pointer p-2 rounded-md hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed'
+               >
                   {loading ? 'Logging in...' : 'Login'}
                </button>
                <button
                type="button"
                onClick={() => demoCredentials("user")}
-               className="bg-gray-200 p-2 rounded-md">
+               className="bg-slate-600 cursor-pointer p-2 rounded-md hover:bg-slate-800">
                   Fill Demo User
                </button>
                <button
                type="button"
                onClick={() => demoCredentials("bibliotecario")}
-               className="bg-gray-200 p-2 rounded-md">
+               className="bg-slate-600 cursor-pointer p-2 rounded-md hover:bg-slate-800">
                   Fill Demo Bibliotecario
                </button>
                <button
                type="button"
                onClick={() => demoCredentials("admin")}
-               className="bg-gray-200 p-2 rounded-md">
+               className="bg-slate-600 cursor-pointer p-2 rounded-md hover:bg-slate-800">
                   Fill Demo Admin
                </button>
             </div>
