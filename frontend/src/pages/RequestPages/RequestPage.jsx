@@ -5,6 +5,7 @@ export default function RequestPage() {
 
    const [requests, setRequests] = useState([]);
    const [loading, setLoading] = useState(true);
+   const [copiesRequested, setCopiesRequested] = useState({});
    const [pagination, setPagination] = useState({
       count: 0,
       next: null,
@@ -65,15 +66,30 @@ export default function RequestPage() {
       }
    }
 
+   const requestCopies = async (id) =>{
+      try{
+         console.log('Request copies:', copiesRequested[id]);
+         const response = await api.post(`/api/books/${id}/request-copies/`, {
+            copies_requested: copiesRequested[id],
+         });
+
+         console.log('Book requested successfully:', response.data);
+      }
+      catch (error) {
+         console.error('Error requesting book:', error);
+      }
+   }
+
    return (
       <div className='text-white'>
          <h1 className='text-6xl'>Request Page</h1>
-         {requests.map((request)=>(
-            <div key={request.id} className='border border-gray-600 py-4 my-6'>
+         {requests.map((request) => (
+            <div key={request.id} className='border border-gray-600 py-4 my-6 rounded-lg'>
                <h2 className='text-3xl'>{request.book.title}</h2>
                <p className='text-xl'>Status: {request.status}</p>
                <p className='text-xl'>Requested by: {request.user.username}</p>
                <p className='text-xl'>Request Date: {new Date(request.request_date).toLocaleDateString()}</p>
+               <p className='text-xl'>Copies available: {request.book.available_copies}</p>
                <p className='text-xl'>Days requested: {request.days_requested}</p>
                {request.status === 'pending' && (
                   <div>
@@ -89,6 +105,25 @@ export default function RequestPage() {
                      >
                         Rechazar
                      </button>
+                     <input type="number"
+                        value={copiesRequested[request.book.id] || ''}
+                        onChange={(e) => setCopiesRequested(prev => ({
+                           ...prev,
+                           [request.book.id]: e.target.value
+                           })
+                        )}
+                        className='border border-gray-300 rounded px-4 py-2 ml-4'
+                        placeholder='Copies requested'
+                        min="1"
+                     />
+                        <button
+                           onClick={() => requestCopies(request.book.id)}
+                           className='ml-4 bg-blue-600 hover:bg-blue-800 text-white px-4 py-2 rounded'
+                        >
+                           Request Copies
+                        </button>
+
+
                   </div>
                )
                }

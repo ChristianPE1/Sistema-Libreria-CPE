@@ -26,9 +26,9 @@ export default function NavBar() {
    }, [checkLoginStatus]);
 
    return(
-      <nav className='bg-gray-800 p-4 text-white flex justify-between items-center w-full'>
+      <nav className='bg-gray-800 p-4 text-white flex justify-between items-center w-full z-40'>
          <div>
-            <Link to='/' className='font-bold text-3xl'>Biblioteca Virtual</Link>
+            <Link to='/' className='font-bold text-3xl cursor-pointer'>Biblioteca Virtual</Link>
             {isLogged && <span className='text-sm ml-4'>Welcome, {role}</span>}
             {isLogged && <Link to='/logout' className='text-sm ml-4'>Logout</Link>}
             {!isLogged && <Link to='/login' className='text-sm ml-4'>Login</Link>}

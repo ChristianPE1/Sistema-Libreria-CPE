@@ -57,13 +57,13 @@ export default function MyRequests() {
    }
 
    return (
-      <div className='text-white'>
+      <div className='relative text-white w-full h-screen items-center justify-center '>
          <h1 className='text-6xl'>My Request</h1>
          <div className='flex flex-col gap-4'>
             {requests.map((request) => (
                <div key={request.id} className='bg-gray-800 p-4 rounded-lg'>
                   <h2 className='text-2xl'>{request.book.title}</h2>
-                  <p>Request date: {new Date(request.created_at).toLocaleDateString()}</p>
+                  <p>Request date: {new Date(request.request_date).toLocaleDateString()}</p>
                   <p>Return date: {request.return_date}</p>
                   <p>Status: {request.status}</p>
                   <p>Request Type: {request.request_type}</p>

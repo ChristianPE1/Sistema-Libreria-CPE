@@ -56,53 +56,60 @@ export default function Login() {
    };
 
    return (
-      <section className='flex flex-col gap-6'>
-         <h2 className='text-6xl font-bold'>Login</h2>
-         <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
-            <input
-               type="text"
-               value={email}
-               onChange={(e) => setEmail(e.target.value)}
-               placeholder="Email"
-               required
-               className='border-2 border-gray-300 rounded-md p-2'
-            />
-            <input
-               type="password"
-               value={password}
-               onChange={(e) => setPassword(e.target.value)}
-               placeholder="Password"
-               required
-               className='border-2 border-gray-300 rounded-md p-2'
-            />
-            <div className="flex gap-4 flex-col">
-               <button
-               type="submit"
-               disabled={loading}
-               className='bg-slate-600 cursor-pointer p-2 rounded-md hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed'
-               >
-                  {loading ? 'Logging in...' : 'Login'}
-               </button>
-               <button
-               type="button"
-               onClick={() => demoCredentials("user")}
-               className="bg-slate-600 cursor-pointer p-2 rounded-md hover:bg-slate-800">
-                  Fill Demo User
-               </button>
-               <button
-               type="button"
-               onClick={() => demoCredentials("bibliotecario")}
-               className="bg-slate-600 cursor-pointer p-2 rounded-md hover:bg-slate-800">
-                  Fill Demo Bibliotecario
-               </button>
-               <button
-               type="button"
-               onClick={() => demoCredentials("admin")}
-               className="bg-slate-600 cursor-pointer p-2 rounded-md hover:bg-slate-800">
-                  Fill Demo Admin
-               </button>
+      <section className='absolute w-full h-screen flex items-center justify-center top-0 left-0'>
+         <main className='flex flex-row gap-4 border-2 border-gray-500 rounded-xl p-4 shadow-lg bg-slate-700'>
+            <div className='flex flex-col gap-4 items-center justify-center'>
+               <h2 className='text-6xl font-bold'>Login</h2>
+               <footer className='flex flex-col gap-1'>
+                  <button
+                     type="button"
+                     onClick={() => demoCredentials("user")}
+                     className="bg-slate-600 cursor-pointer p-2 rounded-md hover:bg-slate-800">
+                     Fill Demo User
+                  </button>
+                  <button
+                     type="button"
+                     onClick={() => demoCredentials("bibliotecario")}
+                     className="bg-slate-600 cursor-pointer p-2 rounded-md hover:bg-slate-800">
+                     Fill Demo Bibliotecario
+                  </button>
+                  <button
+                     type="button"
+                     onClick={() => demoCredentials("admin")}
+                     className="bg-slate-600 cursor-pointer p-2 rounded-md hover:bg-slate-800">
+                     Fill Demo Admin
+                  </button>
+               </footer>
             </div>
-         </form>
+            <form onSubmit={handleSubmit} className='flex flex-col gap-4 items-center justify-center'>
+               <input
+                  type="text"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Email"
+                  required
+                  className='border-2 border-gray-300 rounded-md p-2'
+               />
+               <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Password"
+                  required
+                  className='border-2 border-gray-300 rounded-md p-2'
+               />
+               <div className="flex gap-4 flex-col">
+                  <button
+                  type="submit"
+                  disabled={loading}
+                  className='bg-slate-600 cursor-pointer p-2 rounded-md hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed'
+                  >
+                     {loading ? 'Logging in...' : 'Login'}
+                  </button>
+                  
+               </div>
+            </form>
+         </main>
       </section>
    );
 }

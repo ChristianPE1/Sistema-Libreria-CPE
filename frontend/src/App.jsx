@@ -42,10 +42,10 @@ function App() {
               <ProtectedRoute allowedRoles={['admin']}>
                 <RequestsCopies />
               </ProtectedRoute>}/>
-          </Route>
           <Route path="/login" element={<Login />} />
-          <Route path="/logout" element={<Logout />} />
           <Route path="/register" element={<RegisterLogout />} /> 
+          </Route>
+          <Route path="/logout" element={<Logout />} />
         </Routes>
         
       </Router>
