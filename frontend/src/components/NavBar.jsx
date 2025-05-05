@@ -1,16 +1,17 @@
 import { Link } from 'react-router-dom';
-import { ACCESS_TOKEN } from '../constants';
-import { useEffect, useCallback } from 'react';
-import { useState } from 'react';
+import PropTypes from 'prop-types';
+//import { ACCESS_TOKEN } from '../constants';
+//import { useEffect, useCallback } from 'react';
+//import { useState } from 'react';
 
 
-export default function NavBar() {
+export default function NavBar({ isLogged, role }) {
 
-   const tokenAccess = localStorage.getItem(ACCESS_TOKEN);
-   const [isLogged, setIsLogged] = useState(false);
-   const [role, setRole] = useState(null);
+   //const tokenAccess = localStorage.getItem(ACCESS_TOKEN);
+   //const [isLogged, setIsLogged] = useState(false);
+   //const [role, setRole] = useState(null);
 
-   const checkLoginStatus = useCallback(() => {
+   /*const checkLoginStatus = useCallback(() => {
       if (tokenAccess) {
          setIsLogged(true);
          const decodedToken = JSON.parse(atob(tokenAccess.split('.')[1]));
@@ -23,7 +24,7 @@ export default function NavBar() {
 
    useEffect(() => {
       checkLoginStatus();
-   }, [checkLoginStatus]);
+   }, [checkLoginStatus]);*/
 
    return(
       <nav className='bg-gray-800 p-4 text-white flex justify-between items-center w-full z-40'>
@@ -40,3 +41,8 @@ export default function NavBar() {
       </nav>
    );
 }
+
+NavBar.propTypes = {
+   isLogged: PropTypes.bool.isRequired, // isLogged must be a boolean and is required
+   role: PropTypes.string // role must be a string (optional)
+};

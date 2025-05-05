@@ -21,7 +21,7 @@ export default function Login() {
       e.preventDefault();
       setLoading(true);
 
-      clearExistingTokens(); // Clear existing tokens before login
+      clearExistingTokens();
 
       try {
          const response = await api.post(route, {
@@ -33,6 +33,7 @@ export default function Login() {
 
          localStorage.setItem(ACCESS_TOKEN, access);
          localStorage.setItem(REFRESH_TOKEN, refresh);
+         window.dispatchEvent(new Event('authChanged'));
 
          navigate('/');
       }

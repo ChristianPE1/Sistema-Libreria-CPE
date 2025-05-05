@@ -9,9 +9,13 @@ import BookPage from './pages/BooksPages/BookPage'
 import RequestPage from './pages/RequestPages/RequestPage'
 import RequestsCopies from './pages/RequestPages/RequestsCopies'
 import Layout from './components/GlobalLayout'
+import { useEffect } from 'react'
 
 function Logout () {
-  localStorage.clear()
+  useEffect(() => {
+    localStorage.clear(); // Limpiar el almacenamiento local
+    window.dispatchEvent(new Event('authChanged')); // Disparar el evento de cambio de autenticación
+  }, []);
   return <Navigate to="/login" />
 }
 
