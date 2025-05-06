@@ -8,7 +8,7 @@ export default function BookPage() {
    const [book, setBook] = useState(null);
    const [loading, setLoading] = useState(true);
    const [daysRequested, setDaysRequested] = useState(0);
-   
+
 
    const fetchBook = async (id) => {
       setLoading(true);
@@ -23,7 +23,7 @@ export default function BookPage() {
    }
 
    const requestBook = async (id) => {
-      if(daysRequested <= 0) {
+      if (daysRequested <= 0) {
          console.error('Days requested must be greater than 0');
          return;
       }
@@ -32,7 +32,7 @@ export default function BookPage() {
             days_requested: daysRequested,
          });
          console.log('Book requested successfully:', response.data);
-         
+
       } catch (error) {
          console.error('Error requesting book:', error);
 
@@ -65,7 +65,7 @@ export default function BookPage() {
                onChange={(e) => setDaysRequested(e.target.value)}
                className='border border-gray-300 rounded px-4 py-2'
                placeholder='Días solicitados'
-               
+
             />
             <button
                onClick={() => requestBook(id)}

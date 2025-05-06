@@ -15,11 +15,11 @@ export default function Books() {
    });
 
    const fetchBooks = useCallback(async (url = '/api/books/') => {
-      if (!url) return; 
+      if (!url) return;
 
       setLoading(true);
       try {
-         const response = await api.get(url,{withCredentials: false});
+         const response = await api.get(url, { withCredentials: false });
          setBooks(response.data.results);
          setPagination({
             count: response.data.count,
@@ -30,7 +30,7 @@ export default function Books() {
       } catch (err) {
          console.error('Error fetching books:', err);
       }
-   },[]);
+   }, []);
 
    const getPageNumberFromUrl = (url) => {
       if (!url) return 1;
@@ -54,12 +54,12 @@ export default function Books() {
 
    const handleSearch = async (e) => {
       e.preventDefault();
-      if(search.trim() === '') {
+      if (search.trim() === '') {
          fetchBooks();
          return;
       }
       const url = `/api/books/search/?search=${search}`;
-      
+
       fetchBooks(url);
    };
 
@@ -69,10 +69,6 @@ export default function Books() {
    return (
       <div className="text-white">
          <h1 className='text-5xl font-bold'>Virtual Library</h1>
-         <header className='my-6 flex justify-center items-center gap-5'>
-            <Link to="/login" className="p-3 border rounded-md border-gray-200">Login</Link>
-            <Link to="/register" className="p-3 border rounded-md border-gray-200">Register</Link>
-         </header>
          <form className="max-w-md mx-auto" onSubmit={handleSearch}>
             <label htmlFor="default-search" className="font-medium text-gray-900">Search</label>
             <div className="relative">
@@ -83,32 +79,36 @@ export default function Books() {
                </div>
                <div className='w-full flex justify-end items-center'>
                   <input
-                  type="search"
-                  id="default-search"
-                  className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50"
-                  placeholder="Search Mockups, Logos..."
-                  value = {search}
-                  onChange={(e) => setSearch(e.target.value)}
-                  required
+                     type="search"
+                     id="default-search"
+                     className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50"
+                     placeholder="Search Mockups, Logos..."
+                     value={search}
+                     onChange={(e) => setSearch(e.target.value)}
+                     required
                   />
                   <button type="submit" className="py-2 px-3 cursor-pointer rounded-xl text-white absolute bg-blue-700">Search</button>
                </div>
             </div>
          </form>
-         <div className="flex">
+         <div className="flex items-center justify-center flex-wrap gap-6">
             {books.map(book => (
-               <div key={book.id} className="border-2 border-gray-300 rounded-lg p-4 m-4 bg-gray-800 text-white">
-                  
-                  <h3 className='text-3xl my-2'>{book.title}</h3>
-                  <p><strong>Author:</strong> {book.author}</p>
-                  <p><strong>Genre:</strong> {book.genre}</p>
-                  <p><strong>Year:</strong> {book.year}</p>
-                  <p className="availability">
-                     <strong>Available Copies:</strong> {book.available_copies}
-                  </p>
-                  <Link to={`/books/${book.id}`} className="text-blue-600 ">
-                     View Details
-                  </Link>
+               <div key={book.id} className="flex flex-col  border-2 border-gray-300 rounded-lg gap-6 m-6 bg-gray-800/50 text-white max-h-[500px] max-w-[300px] p-4">
+                  <header className='flex justify-center items-center'>
+                     <img src="/harry_potter_1.jpg" alt="harry potter" className='max-w-1/2' />
+                  </header>
+                  <section>
+                     <h3 className='text-3xl my-2 font-bold '>{book.title}</h3>
+                     <p><strong>Author:</strong> {book.author}</p>
+                     <p><strong>Genre:</strong> {book.genre}</p>
+                     <p><strong>Year:</strong> {book.year}</p>
+                     <p className="availability">
+                        <strong>Available Copies:</strong> {book.available_copies}
+                     </p>
+                     <Link to={`/books/${book.id}`} className="text-blue-600 ">
+                        View Details
+                     </Link>
+                  </section>
                </div>
             ))}
          </div>
