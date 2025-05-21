@@ -77,7 +77,7 @@ export default function Books() {
                      <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                   </svg>
                </div>
-               <div className='w-full flex justify-end items-center'>
+               <div className='w-full flex justify-end items-center' id='test'>
                   <input
                      type="search"
                      id="default-search"
@@ -93,15 +93,13 @@ export default function Books() {
          </form>
          <div className="flex items-center justify-center flex-wrap gap-6">
             {books.map(book => (
-               <div key={book.id} className="flex flex-col  border-2 border-gray-300 rounded-lg gap-6 m-6 bg-gray-800/50 text-white max-h-[500px] max-w-[300px] p-4">
+               <div key={book.id} className="flex flex-col  border-2 border-gray-300/20 rounded-lg gap-6 m-6 bg-gray-800/50 text-white max-h-[500px] max-w-[300px] p-4">
                   <header className='flex justify-center items-center'>
                      <img src="/harry_potter_1.jpg" alt="harry potter" className='max-w-1/2' />
                   </header>
                   <section>
-                     <h3 className='text-3xl my-2 font-bold '>{book.title}</h3>
+                     <h3 className='text-xl my-2 font-bold '>{book.title}</h3>
                      <p><strong>Author:</strong> {book.author}</p>
-                     <p><strong>Genre:</strong> {book.genre}</p>
-                     <p><strong>Year:</strong> {book.year}</p>
                      <p className="availability">
                         <strong>Available Copies:</strong> {book.available_copies}
                      </p>

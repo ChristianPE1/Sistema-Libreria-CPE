@@ -44,20 +44,20 @@ export default function Login() {
       }
    }
    const demoCredentials = (typeUser) => {
-      if(typeUser === "user"){
+      if (typeUser === "user") {
          setEmail('user@example.com');
          setPassword('123');
-      } else if(typeUser === "bibliotecario"){
+      } else if (typeUser === "bibliotecario") {
          setEmail('bib@example.com')
          setPassword('123');
-      } else if(typeUser === "admin"){
+      } else if (typeUser === "admin") {
          setEmail('admin@example.com')
          setPassword('123');
       }
    };
 
    return (
-      <section className='absolute w-full h-screen flex items-center justify-center top-0 left-0'>
+      <section className='flex items-center justify-center  z-10'>
          <main className='flex flex-row gap-4 border-2 border-gray-500 rounded-xl p-4 shadow-lg bg-slate-700'>
             <div className='flex flex-col gap-4 items-center justify-center'>
                <h2 className='text-6xl font-bold'>Login</h2>
@@ -101,13 +101,13 @@ export default function Login() {
                />
                <div className="flex gap-4 flex-col">
                   <button
-                  type="submit"
-                  disabled={loading}
-                  className='bg-slate-600 cursor-pointer p-2 rounded-md hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed'
+                     type="submit"
+                     disabled={loading}
+                     className='bg-slate-600 cursor-pointer p-2 rounded-md hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed'
                   >
                      {loading ? 'Logging in...' : 'Login'}
                   </button>
-                  
+
                </div>
             </form>
          </main>

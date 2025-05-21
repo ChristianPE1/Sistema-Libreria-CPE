@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import UserIcon from './svg/userIcon';
+import LoginIcon from './svg/loginIcon';
 //import { ACCESS_TOKEN } from '../constants';
 //import { useEffect, useCallback } from 'react';
 //import { useState } from 'react';
@@ -7,24 +9,8 @@ import PropTypes from 'prop-types';
 
 export default function NavBar({ isLogged, role }) {
 
-   //const tokenAccess = localStorage.getItem(ACCESS_TOKEN);
-   //const [isLogged, setIsLogged] = useState(false);
-   //const [role, setRole] = useState(null);
 
-   /*const checkLoginStatus = useCallback(() => {
-      if (tokenAccess) {
-         setIsLogged(true);
-         const decodedToken = JSON.parse(atob(tokenAccess.split('.')[1]));
-         setRole(decodedToken.role);
-      } else {
-         setIsLogged(false);
-         setRole(null);
-      }
-   },[tokenAccess]);
-
-   useEffect(() => {
-      checkLoginStatus();
-   }, [checkLoginStatus]);*/
+   let isLoggedLabel = isLogged ? 'Logout' : 'Login';
 
    return (
       <nav className='bg-gray-800 p-4 text-white flex flex-row justify-between items-center w-full z-40'>
@@ -37,9 +23,10 @@ export default function NavBar({ isLogged, role }) {
             {role === 'admin' && <Link to='/requests-copies' className='text-sm ml-4'>Requests Copies</Link>}
          </div>
          <div className='items-end'>
-            {isLogged && <Link to='/logout' className='text-sm ml-4'>Logout</Link>}
-            {!isLogged && <Link to='/login' className='text-sm ml-4'>Login</Link>}
-            {!isLogged && <Link to='/register' className='text-sm ml-4'>Register</Link>}
+            <Link to={isLogged ? '/logout' : '/login'} className='text-sm ml-4 flex flex-row items-center gap-1'>
+               {isLogged ? <UserIcon /> : <LoginIcon />}
+               {isLoggedLabel}
+            </Link>
          </div>
 
       </nav>

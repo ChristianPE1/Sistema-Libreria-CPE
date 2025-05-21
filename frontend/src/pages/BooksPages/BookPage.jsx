@@ -50,30 +50,36 @@ export default function BookPage() {
 
 
    return (
-      <div className='text-white flex flex-col'>
-         <h1 className='text-4xl font-bold'>{book.title}</h1>
-         <p className='text-xl'>Autor: {book.author} - {book.year}</p>
-         <p className='text-base'>Copies available: {book.available_copies}</p>
-         <p className='text-base'>Description: {book.description}</p>
-         <p className='text-base'>Genre: {book.genre}</p>
+      <div className='text-white flex flex-row'>
+         <main className='flex flex-col items-center justify-center w-1/2'>
+            <img src="/harry_potter_1.jpg" alt="harry potter" className='max-w-1/2' />
+         </main>
+         <section className='flex flex-col justify-center items-start m-4 w-1/2'>
+            <h1 className='text-4xl font-bold'>{book.title}</h1>
+            <p className='text-xl'>Autor: {book.author} - {book.year}</p>
+            <p className='text-base'>Copies available: {book.available_copies}</p>
+            <p className='text-base'>Description: {book.description}</p>
+            <p className='text-base'>Genre: {book.genre}</p>
 
-         <div className='my-4'>
-            <label className='block mb-2'>Selecciona fecha de devolución:</label>
-            <input
-               type='number'
-               value={daysRequested}
-               onChange={(e) => setDaysRequested(e.target.value)}
-               className='border border-gray-300 rounded px-4 py-2'
-               placeholder='Días solicitados'
+            <div className='my-4'>
+               <label className='block mb-2'>Selecciona fecha de devolución:</label>
+               <input
+                  type='number'
+                  value={daysRequested}
+                  onChange={(e) => setDaysRequested(e.target.value)}
+                  className='border border-gray-300 rounded px-4 py-2'
+                  placeholder='Días solicitados'
 
-            />
-            <button
-               onClick={() => requestBook(id)}
-               className='ml-4 bg-blue-600 hover:bg-blue-800 text-white px-4 py-2 rounded'
-            >
-               Solicitar Libro
-            </button>
-         </div>
+               />
+               <button
+                  onClick={() => requestBook(id)}
+                  className='ml-4 bg-blue-600 hover:bg-blue-800 text-white px-4 py-2 rounded'
+               >
+                  Solicitar Libro
+               </button>
+            </div>
+         </section>
+
 
       </div>
    );
