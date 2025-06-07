@@ -67,10 +67,8 @@ export default function Books() {
       return <div>Loading books...</div>;
    }
    return (
-      <div className="text-white">
-         <h1 className='text-5xl font-bold'>Virtual Library</h1>
-         <form className="max-w-md mx-auto" onSubmit={handleSearch}>
-            <label htmlFor="default-search" className="font-medium text-gray-900">Search</label>
+      <div className="text-white flex flex-col items-center justify-between min-h-screen ">
+         <form className="max-w-md mx-auto mt-5" onSubmit={handleSearch}>
             <div className="relative">
                <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
                   <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
@@ -93,11 +91,11 @@ export default function Books() {
          </form>
          <div className="flex items-center justify-center flex-wrap gap-6">
             {books.map(book => (
-               <div key={book.id} className="flex flex-col  border-2 border-gray-300/20 rounded-lg gap-6 m-6 bg-gray-800/50 text-white max-h-[500px] max-w-[300px] p-4">
-                  <header className='flex justify-center items-center'>
-                     <img src="/harry_potter_1.jpg" alt="harry potter" className='max-w-1/2' />
+               <div key={book.id} className="relative flex flex-col  border-2 border-gray-300/20 rounded-lg gap-6 m-6 bg-gray-800/50 text-white max-h-[500px] max-w-[300px] p-4">
+                  <header className='flex justify-center inset-0 object-cover items-center opacity-40 z-0 hover:opacity-100 transition-opacity duration-100 group-hover:opacity-40'>
+                     <img src="/harry_potter_1.jpg" alt="harry potter" className='w-full overflow-hidden' />
                   </header>
-                  <section>
+                  <div className='absolute inset-0 flex flex-col items-center justify-center z-10 bottom-0 left-0 right-0 group-hover:opacity-100 transition-opacity duration-100 bg-black/50 rounded-lg'>
                      <h3 className='text-xl my-2 font-bold '>{book.title}</h3>
                      <p><strong>Author:</strong> {book.author}</p>
                      <p className="availability">
@@ -106,13 +104,14 @@ export default function Books() {
                      <Link to={`/books/${book.id}`} className="text-blue-600 ">
                         View Details
                      </Link>
-                  </section>
+                  </div>
+                  <section className='relative z-10' />
                </div>
             ))}
          </div>
 
          {/* Pagination Controls */}
-         <div className="pagination-controls">
+         <div className="pagination-controls justify-end mb-5">
             <button
                onClick={() => handlePageChange(pagination.previous)}
                disabled={!pagination.previous}
