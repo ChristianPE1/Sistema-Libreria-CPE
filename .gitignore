@@ -1,1 +1,8 @@
+# entornos virtuales
 env/
+venv/
+
+# bytecode de Python
+__pycache__/
+*.py[cod]
+*.pyc
