@@ -7,6 +7,10 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# bun
+bun.lock
+bunfig.toml
+
 node_modules
 dist
 dist-ssr
