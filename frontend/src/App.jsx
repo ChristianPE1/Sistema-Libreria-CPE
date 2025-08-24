@@ -13,8 +13,8 @@ import { useEffect } from 'react'
 
 function Logout () {
   useEffect(() => {
-    localStorage.clear(); // Limpiar el almacenamiento local
-    window.dispatchEvent(new Event('authChanged')); // Disparar el evento de cambio de autenticación
+    localStorage.clear();
+    window.dispatchEvent(new Event('authChanged'));
   }, []);
   return <Navigate to="/login" />
 }

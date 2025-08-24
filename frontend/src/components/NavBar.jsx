@@ -13,27 +13,65 @@ export default function NavBar({ isLogged, role }) {
    let isLoggedLabel = isLogged ? 'Logout' : 'Login';
 
    return (
-      <nav className='bg-gray-800 p-4 text-white flex flex-row justify-between items-center w-full z-40'>
-
-         <Link to='/' className='font-bold text-3xl cursor-pointer'>Biblioteca Virtual</Link>
-         {isLogged && <span className='text-sm ml-4'>Welcome, {role}</span>}
-         <div>
-            {role === 'usuario' && <Link to='/my-requests' className='text-sm ml-4'>My Requests</Link>}
-            {role === 'bibliotecario' && <Link to='/requests' className='text-sm ml-4'>Requests</Link>}
-            {role === 'admin' && <Link to='/requests-copies' className='text-sm ml-4'>Requests Copies</Link>}
-         </div>
-         <div className='items-end'>
-            <Link to={isLogged ? '/logout' : '/login'} className='text-sm ml-4 flex flex-row items-center gap-1'>
-               {isLogged ? <UserIcon /> : <LoginIcon />}
-               {isLoggedLabel}
+      <nav className='bg-neutral-950/90 backdrop-blur-sm border-b border-neutral-800 p-4 sticky top-0 z-50'>
+         <div className='container mx-auto max-w-7xl flex flex-row justify-between items-center'>
+            
+            {/* Logo */}
+            <Link to='/' className='text-2xl font-bold text-white group hover:text-purple-400 transition-colors duration-200'>
+               Biblioteca <span className='text-purple-500 group-hover:text-purple-300 transition-colors duration-200'>Virtual</span>
             </Link>
+            
+            {/* Role indicator - hidden on mobile */}
+            {isLogged && (
+               <div className='hidden md:flex items-center gap-2'>
+                  <span className='text-sm text-neutral-400'>Bienvenido,</span>
+                  <span className='text-sm font-medium text-purple-400 bg-purple-500/10 px-3 py-1 rounded-full border border-purple-500/20'>
+                     {role}
+                  </span>
+               </div>
+            )}
+            
+            {/* Navigation links */}
+            <div className='flex items-center gap-6'>
+               {role === 'usuario' && (
+                  <Link 
+                     to='/my-requests' 
+                     className='text-sm text-neutral-300 hover:text-purple-400 transition-colors duration-200 font-medium hidden sm:block'
+                  >
+                     Mis Solicitudes
+                  </Link>
+               )}
+               {role === 'bibliotecario' && (
+                  <Link 
+                     to='/requests' 
+                     className='text-sm text-neutral-300 hover:text-purple-400 transition-colors duration-200 font-medium hidden sm:block'
+                  >
+                     Solicitudes
+                  </Link>
+               )}
+               {role === 'admin' && (
+                  <Link 
+                     to='/requests-copies' 
+                     className='text-sm text-neutral-300 hover:text-purple-400 transition-colors duration-200 font-medium hidden sm:block'
+                  >
+                     Solicitudes Copias
+                  </Link>
+               )}
+               
+               <Link 
+                  to={isLogged ? '/logout' : '/login'} 
+                  className='flex items-center gap-2 text-sm bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg transition-colors duration-200 font-medium'
+               >
+                  {isLogged ? <UserIcon /> : <LoginIcon />}
+                  {isLoggedLabel}
+               </Link>
+            </div>
          </div>
-
       </nav>
    );
 }
 
 NavBar.propTypes = {
-   isLogged: PropTypes.bool.isRequired, // isLogged must be a boolean and is required
-   role: PropTypes.string // role must be a string (optional)
+   isLogged: PropTypes.bool.isRequired,
+   role: PropTypes.string
 };
