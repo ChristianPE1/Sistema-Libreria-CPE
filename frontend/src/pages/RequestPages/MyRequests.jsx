@@ -1,6 +1,5 @@
 import { useState,useEffect,useCallback } from 'react';
 import api from '../../api/api';
-import { Link } from 'react-router-dom';
 
 export default function MyRequests() {
    const [requests, setRequests] = useState([]);
@@ -64,8 +63,8 @@ export default function MyRequests() {
    }
 
    return (
-      <div className='flex flex-col gap-y-8'>
-         <header className="text-center space-y-4">
+      <div className='flex flex-col gap-y-8 max-w-3xl m-auto'>
+         <header className="flex flex-col gap-y-4 text-center">
             <h1 className='text-4xl font-bold text-white'>
                Mis <span className="text-purple-500">Solicitudes</span>
             </h1>
@@ -74,60 +73,40 @@ export default function MyRequests() {
             </p>
          </header>
 
-         {/* Requests List */}
-         <div className='flex flex-col gap-y-4'>
+         <div className='grid sm:grid-cols-2 lg:grid-cols-3 grid-cols-4 gap-4'>
             {requests.map((request) => (
                <div key={request.id} className='bg-neutral-900 border border-neutral-800 rounded-lg p-6 hover:border-purple-600/50 transition-all duration-200'>
-                  <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-                     <div className="flex-1 space-y-3">
-                        <h2 className='text-xl font-semibold text-white'>{request.book.title}</h2>
-                        
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+                  <div className="flex flex-col justify-between items-center gap-4">
+                     <main className="flex flex-col gap-y-3 justify-center items-center">
+                        <h2 className='text-xl font-semibold text-white text-center'>{request.book.title}</h2>
+                        <div className="flex flex-col items-center gap-3">
+                           <span className={`px-3 py-1 rounded-full text-xs font-medium ${request.status === 'approved'
+                                 ? 'bg-green-500/20 text-green-400 border border-green-500/20'
+                                 : request.status === 'rejected'
+                                    ? 'bg-red-500/20 text-red-400 border border-red-500/20'
+                                    : 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/20'
+                              }`}>
+                              {request.status === 'approved' ? 'Aprobado' :
+                                 request.status === 'rejected' ? 'Rechazado' : 'Pendiente'}
+                           </span>
+                        </div>
+                        <section className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
                            <div>
                               <span className='text-neutral-400'>Fecha de solicitud:</span>
                               <p className='text-neutral-200'>{new Date(request.request_date).toLocaleDateString()}</p>
                            </div>
                            <div>
-                              <span className='text-neutral-400'>Fecha de devolución:</span>
-                              <p className='text-neutral-200'>{request.return_date || 'No asignada'}</p>
-                           </div>
-                           <div>
-                              <span className='text-neutral-400'>Tipo:</span>
-                              <p className='text-neutral-200'>{request.request_type}</p>
+                              <span className='text-neutral-400'>Dias solicitados:</span>
+                              <p className='text-neutral-200'>{request.days_requested || 'No asignada'}</p>
                            </div>
                            <div>
                               <span className='text-neutral-400'>Usuario:</span>
                               <p className='text-neutral-200'>{request.user.email}</p>
                            </div>
-                        </div>
-                        
-                        {request.description && (
-                           <div>
-                              <span className='text-neutral-400 text-sm'>Descripción:</span>
-                              <p className='text-neutral-200 text-sm'>{request.description}</p>
-                           </div>
-                        )}
-                     </div>
+                        </section>
+                     </main>
                      
-                     <div className="flex flex-col items-end gap-3">
-                        <span className={`px-3 py-1 rounded-full text-xs font-medium ${
-                           request.status === 'approved' 
-                              ? 'bg-green-500/20 text-green-400 border border-green-500/20' 
-                              : request.status === 'rejected'
-                              ? 'bg-red-500/20 text-red-400 border border-red-500/20'
-                              : 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/20'
-                        }`}>
-                           {request.status === 'approved' ? 'Aprobado' : 
-                            request.status === 'rejected' ? 'Rechazado' : 'Pendiente'}
-                        </span>
-                        
-                        <Link 
-                           to={`/requests/${request.id}`} 
-                           className='text-purple-400 hover:text-purple-300 font-medium text-sm transition-colors'
-                        >
-                           Ver Detalles →
-                        </Link>
-                     </div>
+
                   </div>
                </div>
             ))}
@@ -142,7 +121,8 @@ export default function MyRequests() {
             </div>
          )}
 
-         {requests.length > 0 && (
+         {/** Pagination **/}
+         {requests.length > 0 && pagination.count > 0 && (
             <footer className="flex items-center justify-center gap-4 pt-8">
                <button
                   onClick={() => handlePageChange(pagination.previous)}
@@ -153,13 +133,13 @@ export default function MyRequests() {
                </button>
                
                <span className="text-neutral-400 font-medium">
-                  Página {pagination.currentPage} de {Math.ceil(pagination.count / 10)}
+                  Página {pagination.currentPage} de {Math.ceil(pagination.count / 3)}
                </span>
                
                <button
                   onClick={() => handlePageChange(pagination.next)}
                   disabled={!pagination.next}
-                  className='cursor-pointer px-4 py-2 rounded-lg font-medium transition-all duration-200  bg-neutral-700 hover:bg-neutral-600 text-neutral-100  disabled:opacity-50 disabled:cursor-not-allowed'
+                  className='cursor-pointer px-4 py-2 rounded-lg font-medium transition-all duration-200 bg-neutral-700 hover:bg-neutral-600 text-neutral-100 disabled:opacity-50 disabled:cursor-not-allowed'
                >
                   Siguiente
                </button>

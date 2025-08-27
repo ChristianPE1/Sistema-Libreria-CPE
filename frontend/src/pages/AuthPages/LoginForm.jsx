@@ -142,7 +142,7 @@ export default function Login() {
                   <button
                      type="submit"
                      disabled={loading}
-                     className='w-full px-4 py-2 rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-neutral-900 bg-purple-600 hover:bg-purple-700 text-white focus:ring-purple-500'
+                     className='cursor-pointer w-full px-4 py-2 rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-neutral-900 bg-purple-600 hover:bg-purple-700 text-white focus:ring-purple-500'
                   >
                      {loading ? (
                         <div className="flex items-center justify-center gap-2">

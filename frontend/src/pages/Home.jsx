@@ -5,6 +5,7 @@ import { MdEdit, MdDelete, MdAdd } from 'react-icons/md';
 import EditBookModal from '../components/books/EditBookModal';
 import CreateBookModal from '../components/books/CreateBookModal';
 import { useAuth } from '../hooks/useAuth';
+import { ACCESS_TOKEN } from '../constants';
 
 export default function Books() {
    const { role } = useAuth();
@@ -88,6 +89,14 @@ export default function Books() {
 
    const handleUpdateBook = async (bookId, bookData) => {
       try {
+         const token = localStorage.getItem(ACCESS_TOKEN);
+         console.log('Actualizando libro:', bookId, 'Token disponible:', !!token);
+         console.log('Datos del libro:', bookData);
+         
+         if (!token) {
+            throw new Error('No hay token de autenticación');
+         }
+         
          await api.put(`/api/books/${bookId}/`, bookData);
          fetchBooks();
       } catch (error) {
@@ -135,9 +144,9 @@ export default function Books() {
    }
 
    return (
-      <div className="space-y-8">
+      <div className="flex flex-col gap-y-8 max-w-6xl m-auto">
          {/* Header */}
-         <header className="text-center space-y-4">
+         <header className="flex flex-col gap-y-4 text-center">
             <h1 className="text-4xl font-bold text-white">
                Catálogo de <span className="text-purple-500">Libros</span>
             </h1>
@@ -159,7 +168,7 @@ export default function Books() {
          </header>
 
          {/* Search Form */}
-         <form onSubmit={handleSearch} className="max-w-2xl mx-auto">
+         <form onSubmit={handleSearch} className="sm:w-sm md:w-md lg:w-xl xl:w-2xl mx-auto">
             <div className="relative">
                <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                   <svg className="w-5 h-5 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -183,9 +192,9 @@ export default function Books() {
          </form>
 
          {/* Books Grid */}
-         <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+         <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {books.map(book => (
-               <div key={book.id} className="group bg-neutral-900 border border-neutral-800 rounded-lg p-6 transition-all duration-200 hover:border-purple-600 hover:shadow-lg hover:shadow-purple-600/10 overflow-hidden">
+               <div key={book.id} className=" group bg-neutral-900 border border-neutral-800 rounded-lg p-6 transition-all duration-200 hover:border-purple-600 hover:shadow-lg hover:shadow-purple-600/10 overflow-hidden">
                   
 
                   {role === 'admin' && (
@@ -210,7 +219,7 @@ export default function Books() {
                   {/* Book Cover */}
                   <aside className="relative h-64 mb-4 overflow-hidden rounded-lg">
                      <img 
-                        src="/harry_potter_1.jpg" 
+                        src={book.image}
                         alt={book.title}
                         className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                      />
@@ -263,6 +272,7 @@ export default function Books() {
             </div>
          )}
 
+         {/* Pagination */}
          {books.length > 0 && (
             <footer className="flex items-center justify-center gap-4 pt-8">
                <button

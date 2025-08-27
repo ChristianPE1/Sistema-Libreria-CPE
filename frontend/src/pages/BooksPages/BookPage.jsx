@@ -129,7 +129,7 @@ export default function BookPage() {
                
                <button
                   onClick={() => window.history.back()}
-                  className='px-4 py-2 rounded-lg font-medium transition-all duration-200 bg-neutral-700 hover:bg-neutral-600 text-neutral-100 '
+                  className='cursor-pointer px-4 py-2 rounded-lg font-medium transition-all duration-200 bg-neutral-700 hover:bg-neutral-600 text-neutral-100 '
                >
                   ← Volver al catálogo
                </button>
