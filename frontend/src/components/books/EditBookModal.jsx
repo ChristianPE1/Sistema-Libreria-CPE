@@ -10,21 +10,34 @@ export default function EditBookModal({ isOpen, onClose, book, onSave }) {
       year: '',
       description: '',
       available_copies: '',
+      image: '',
    });
    const [loading, setLoading] = useState(false);
 
    useEffect(() => {
-      if (book) {
+      if (book && isOpen) {
          setFormData({
-            title: book.title || '',
-            author: book.author || '',
-            genre: book.genre || '',
-            year: book.year || '',
-            description: book.description || '',
-            available_copies: book.available_copies || '',
+            title: book.title?.toString() || '',
+            author: book.author?.toString() || '',
+            genre: book.genre?.toString() || '',
+            year: book.year?.toString() || '',
+            description: book.description?.toString() || '',
+            available_copies: book.available_copies?.toString() || '',
+            image: book.image?.toString() || '',
+         });
+      } else if (!isOpen) {
+         // Reset form when modal closes
+         setFormData({
+            title: '',
+            author: '',
+            genre: '',
+            year: '',
+            description: '',
+            available_copies: '',
+            image: '',
          });
       }
-   }, [book]);
+   }, [book, isOpen]);
 
    const handleSubmit = async (e) => {
       e.preventDefault();
@@ -146,6 +159,19 @@ export default function EditBookModal({ isOpen, onClose, book, onSave }) {
                         className="w-full px-3 py-2 bg-neutral-800 border border-neutral-700 rounded-lg text-neutral-100 placeholder-neutral-400 transition-colors"
                      />
                   </div>
+               </div>
+               <div>
+                  <label htmlFor="image" className="block text-sm font-medium text-neutral-300 mb-2">
+                     Imagen
+                  </label>
+                  <input
+                     type="text"
+                     id="image"
+                     name="image"
+                     value={formData.image}
+                     onChange={handleChange}
+                     className="w-full px-3 py-2 bg-neutral-800 border border-neutral-700 rounded-lg text-neutral-100 placeholder-neutral-400 transition-colors"
+                  />
                </div>
 
                <div>
