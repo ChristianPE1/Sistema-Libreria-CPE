@@ -1,0 +1,5 @@
+# Ignorar logs y temporales
+*.log
+*.tmp
+.DS_Store
+Thumbs.db

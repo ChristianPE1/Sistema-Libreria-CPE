@@ -1,0 +1,56 @@
+services:
+  # Base de datos PostgreSQL
+  db:
+    build: ./database
+    restart: always
+    environment:
+      - POSTGRES_DB=libreria_db
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=password123
+    ports:
+      - "5432:5432"
+    networks:
+      - libreria_network
+
+  # Backend Django
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: libreria_backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+      - /app/__pycache__
+    environment:
+      - DEBUG=1
+      - DATABASE_URL=postgresql://admin:password123@db:5432/libreria_db
+    depends_on:
+      - db
+    networks:
+      - libreria_network
+    command: >
+      bash -c "
+        ./wait-for-it.sh db:5432 &&
+        python manage.py migrate &&
+        python manage.py runserver 0.0.0.0:8000
+      "
+
+  # Frontend React
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: libreria_frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - libreria_network
+
+# Red 
+networks:
+  libreria_network:
+    driver: bridge
