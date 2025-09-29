@@ -1,3 +1,4 @@
+#!/bin/bash
 set -e
 
 if [ ! -s "$PGDATA/PG_VERSION" ]; then

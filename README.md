@@ -1,7 +1,5 @@
 # 📚 Sistema de Gestión de Librería - CPE
 
-
-
 **Sistema de Gestión de Librería CPE** es una aplicación web full-stack que permite gestionar un sistema bibliotecario completo. La aplicación está construida con tecnologías modernas y cuenta con roles diferenciados para usuarios, bibliotecarios y administradores.
 
 ### Características Principales
@@ -218,9 +216,7 @@ sudo docker volume ls
 sudo docker volume inspect sistema-libreria-cpe_postgres_data
 ```
 
-### **Gestión Independiente vs Orquestada**
-
-#### Gestión Individual (Contenedores Independientes):
+### Gestión Individual:
 ```bash
 # Detener un contenedor
 sudo docker stop libreria_frontend
@@ -232,7 +228,7 @@ sudo docker restart libreria_backend
 sudo docker logs libreria_db --tail 100
 ```
 
-#### Gestión Orquestada (Docker Compose):
+### Gestión Orquestada:
 ```bash
 # Toda la aplicación
 sudo docker-compose up      # Iniciar
@@ -248,13 +244,6 @@ sudo docker-compose logs backend       # Logs del backend
 
 ---
 
-## 🤝 Contribución
-
-1. Fork el proyecto
-2. Crea una rama para tu feature (`git checkout -b feature/nueva-funcionalidad`)
-3. Commit tus cambios (`git commit -am 'Agrega nueva funcionalidad'`)
-4. Push a la rama (`git push origin feature/nueva-funcionalidad`)
-5. Abre un Pull Request
 
 ## 📄 Licencia
 

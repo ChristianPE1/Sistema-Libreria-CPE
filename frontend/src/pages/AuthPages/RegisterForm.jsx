@@ -41,6 +41,22 @@ export default function Form(){
       }
    }
 
+   const demoCredentials = (typeUser) => {
+      if (typeUser === "user") {
+         setUsername('usuario_demo');
+         setEmail('user@example.com');
+         setPassword('123');
+      } else if (typeUser === "bibliotecario") {
+         setUsername('bibliotecario_demo');
+         setEmail('bib@example.com');
+         setPassword('123');
+      } else if (typeUser === "admin") {
+         setUsername('admin_demo');
+         setEmail('admin@example.com');
+         setPassword('123');
+      }
+   };
+
    return(
       <div className='min-h-screen flex items-center justify-center p-4'>
          <section className='w-full max-w-4xl grid lg:grid-cols-2 gap-x-30 gap-y-12 items-center'>
@@ -68,6 +84,34 @@ export default function Form(){
                   </p>
 
                </div>
+
+               {/* Demo credentials */}
+               <section className='space-y-3'>
+                  <p className='text-sm text-neutral-500 font-medium'>Cuentas de prueba:</p>
+                  <div className='grid gap-2'>
+                     <button
+                        type="button"
+                        onClick={() => demoCredentials("user")}
+                        className="cursor-pointer border border-purple-600 text-purple-400 hover:bg-purple-600 hover:text-white px-4 py-2 rounded-lg font-medium transition-all duration-200 text-left justify-start"
+                     >
+                        <span className='font-medium'>Usuario:</span> user@example.com
+                     </button>
+                     <button
+                        type="button"
+                        onClick={() => demoCredentials("bibliotecario")}
+                        className="cursor-pointer border border-purple-600 text-purple-400 hover:bg-purple-600 hover:text-white px-4 py-2 rounded-lg font-medium transition-all duration-200 text-left justify-start"
+                     >
+                        <span className='font-medium'>Bibliotecario:</span> bib@example.com
+                     </button>
+                     <button
+                        type="button"
+                        onClick={() => demoCredentials("admin")}
+                        className="cursor-pointer border border-purple-600 text-purple-400 hover:bg-purple-600 hover:text-white px-4 py-2 rounded-lg font-medium transition-all duration-200 text-left justify-start"
+                     >
+                        <span className='font-medium'>Administrador:</span> admin@example.com
+                     </button>
+                  </div>
+               </section>
             </aside>
 
             {/* Register form */}

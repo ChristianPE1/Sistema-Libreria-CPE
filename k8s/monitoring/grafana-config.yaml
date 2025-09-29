@@ -1,0 +1,259 @@
+# Grafana Configuration
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana-config
+  namespace: monitoring
+data:
+  grafana.ini: |
+    [analytics]
+    check_for_updates = true
+
+    [grafana_net]
+    url = https://grafana.net
+
+    [log]
+    mode = console
+
+    [paths]
+    data = /var/lib/grafana/data
+    logs = /var/log/grafana
+    plugins = /var/lib/grafana/plugins
+    provisioning = /etc/grafana/provisioning
+
+    [server]
+    root_url = http://localhost:3000/
+
+  datasources.yml: |
+    apiVersion: 1
+    datasources:
+    - name: Prometheus
+      type: prometheus
+      url: http://prometheus-service:9090
+      access: proxy
+      isDefault: true
+
+  dashboards.yml: |
+    apiVersion: 1
+    providers:
+    - name: 'default'
+      orgId: 1
+      folder: ''
+      type: file
+      disableDeletion: false
+      updateIntervalSeconds: 10
+      allowUiUpdates: true
+      options:
+        path: /var/lib/grafana/dashboards
+
+  kubernetes-dashboard.json: |
+    {
+      "id": null,
+      "title": "Sistema Librería - Kubernetes Dashboard",
+      "tags": ["kubernetes", "libreria", "django"],
+      "style": "dark",
+      "timezone": "browser",
+      "panels": [
+          {
+            "id": 1,
+            "title": "Django HTTP Requests",
+            "type": "stat",
+            "targets": [
+              {
+                "expr": "sum(rate(django_http_requests_total[5m]))",
+                "legendFormat": "Requests/sec"
+              }
+            ],
+            "fieldConfig": {
+              "defaults": {
+                "color": {
+                  "mode": "thresholds"
+                },
+                "thresholds": {
+                  "steps": [
+                    {"color": "green", "value": null},
+                    {"color": "yellow", "value": 10},
+                    {"color": "red", "value": 50}
+                  ]
+                },
+                "unit": "reqps"
+              }
+            },
+            "gridPos": {"h": 4, "w": 6, "x": 0, "y": 0}
+          },
+          {
+            "id": 2,
+            "title": "Python GC Collections",
+            "type": "stat",
+            "targets": [
+              {
+                "expr": "sum(python_gc_collections_total)",
+                "legendFormat": "GC Collections"
+              }
+            ],
+            "fieldConfig": {
+              "defaults": {
+                "color": {"mode": "palette-classic"},
+                "unit": "short"
+              }
+            },
+            "gridPos": {"h": 4, "w": 6, "x": 6, "y": 0}
+          },
+          {
+            "id": 3,
+            "title": "Active Pods",
+            "type": "stat",
+            "targets": [
+              {
+                "expr": "count(up{job=\"libreria-backend\"})",
+                "legendFormat": "Backend Pods"
+              },
+              {
+                "expr": "count(up{job=\"libreria-frontend\"})",
+                "legendFormat": "Frontend Pods"
+              }
+            ],
+            "fieldConfig": {
+              "defaults": {
+                "color": {"mode": "palette-classic"},
+                "unit": "short"
+              }
+            },
+            "gridPos": {"h": 4, "w": 6, "x": 12, "y": 0}
+          },
+          {
+            "id": 4,
+            "title": "System Uptime",
+            "type": "stat",
+            "targets": [
+              {
+                "expr": "up",
+                "legendFormat": "Services Up"
+              }
+            ],
+            "fieldConfig": {
+              "defaults": {
+                "color": {
+                  "mode": "thresholds"
+                },
+                "thresholds": {
+                  "steps": [
+                    {"color": "red", "value": 0},
+                    {"color": "green", "value": 1}
+                  ]
+                },
+                "unit": "short"
+              }
+            },
+            "gridPos": {"h": 4, "w": 6, "x": 18, "y": 0}
+          },
+          {
+            "id": 5,
+            "title": "Django HTTP Response Time",
+            "type": "timeseries",
+            "targets": [
+              {
+                "expr": "histogram_quantile(0.95, sum(rate(django_http_request_duration_seconds_bucket[5m])) by (le))",
+                "legendFormat": "95th percentile"
+              },
+              {
+                "expr": "histogram_quantile(0.50, sum(rate(django_http_request_duration_seconds_bucket[5m])) by (le))",
+                "legendFormat": "50th percentile"
+              }
+            ],
+            "fieldConfig": {
+              "defaults": {
+                "color": {"mode": "palette-classic"},
+                "unit": "s"
+              }
+            },
+            "gridPos": {"h": 8, "w": 12, "x": 0, "y": 4}
+          },
+          {
+            "id": 6,
+            "title": "Python Memory Usage",
+            "type": "timeseries",
+            "targets": [
+              {
+                "expr": "python_gc_objects_collected_total",
+                "legendFormat": "Objects Collected - {{ generation }}"
+              }
+            ],
+            "fieldConfig": {
+              "defaults": {
+                "color": {"mode": "palette-classic"},
+                "unit": "short"
+              }
+            },
+            "gridPos": {"h": 8, "w": 12, "x": 12, "y": 4}
+          },
+          {
+            "id": 7,
+            "title": "HTTP Requests by Method",
+            "type": "piechart",
+            "targets": [
+              {
+                "expr": "sum(rate(django_http_requests_total[5m])) by (method)",
+                "legendFormat": "{{ method }}"
+              }
+            ],
+            "fieldConfig": {
+              "defaults": {
+                "color": {"mode": "palette-classic"},
+                "unit": "reqps"
+              }
+            },
+            "gridPos": {"h": 8, "w": 8, "x": 0, "y": 12}
+          },
+          {
+            "id": 8,
+            "title": "HTTP Status Codes",
+            "type": "timeseries",
+            "targets": [
+              {
+                "expr": "sum(rate(django_http_responses_total[5m])) by (status)",
+                "legendFormat": "Status {{ status }}"
+              }
+            ],
+            "fieldConfig": {
+              "defaults": {
+                "color": {"mode": "palette-classic"},
+                "unit": "reqps"
+              }
+            },
+            "gridPos": {"h": 8, "w": 8, "x": 8, "y": 12}
+          },
+          {
+            "id": 9,
+            "title": "Prometheus Targets Status",
+            "type": "table",
+            "targets": [
+              {
+                "expr": "up",
+                "legendFormat": "",
+                "format": "table",
+                "instant": true
+              }
+            ],
+            "fieldConfig": {
+              "defaults": {
+                "color": {"mode": "thresholds"},
+                "thresholds": {
+                  "steps": [
+                    {"color": "red", "value": 0},
+                    {"color": "green", "value": 1}
+                  ]
+                }
+              }
+            },
+            "gridPos": {"h": 8, "w": 8, "x": 16, "y": 12}
+          }
+        ],
+        "time": {
+          "from": "now-15m",
+          "to": "now"
+        },
+        "refresh": "5s",
+        "schemaVersion": 27,
+        "version": 1
+      }

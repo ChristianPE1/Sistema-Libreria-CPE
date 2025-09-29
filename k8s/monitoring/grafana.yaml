@@ -1,0 +1,109 @@
+# Grafana Deployment and Service
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grafana-deployment
+  namespace: monitoring
+  labels:
+    app: grafana
+    cncf-project: grafana
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: grafana
+  template:
+    metadata:
+      labels:
+        app: grafana
+    spec:
+      containers:
+      - name: grafana
+        image: grafana/grafana:10.1.0
+        ports:
+        - containerPort: 3000
+          name: grafana
+        env:
+        - name: GF_SECURITY_ADMIN_USER
+          value: admin
+        - name: GF_SECURITY_ADMIN_PASSWORD
+          value: admin123
+        - name: GF_USERS_ALLOW_SIGN_UP
+          value: "false"
+        resources:
+          requests:
+            cpu: 200m
+            memory: 400Mi
+          limits:
+            cpu: 500m
+            memory: 800Mi
+        volumeMounts:
+        - name: config-volume
+          mountPath: /etc/grafana/
+        - name: datasources-volume
+          mountPath: /etc/grafana/provisioning/datasources/
+        - name: dashboards-provider-volume
+          mountPath: /etc/grafana/provisioning/dashboards/
+        - name: dashboards-volume
+          mountPath: /var/lib/grafana/dashboards/
+        - name: storage-volume
+          mountPath: /var/lib/grafana/
+        readinessProbe:
+          httpGet:
+            path: /api/health
+            port: 3000
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /api/health
+            port: 3000
+          initialDelaySeconds: 30
+          periodSeconds: 15
+      volumes:
+      - name: config-volume
+        configMap:
+          name: grafana-config
+          items:
+          - key: grafana.ini
+            path: grafana.ini
+      - name: datasources-volume
+        configMap:
+          name: grafana-config
+          items:
+          - key: datasources.yml
+            path: datasources.yml
+      - name: dashboards-provider-volume
+        configMap:
+          name: grafana-config
+          items:
+          - key: dashboards.yml
+            path: dashboards.yml
+      - name: dashboards-volume
+        configMap:
+          name: grafana-config
+          items:
+          - key: kubernetes-dashboard.json
+            path: kubernetes-dashboard.json
+      - name: storage-volume
+        persistentVolumeClaim:
+          claimName: grafana-pvc
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: grafana-service
+  namespace: monitoring
+  labels:
+    app: grafana
+    cncf-project: grafana
+spec:
+  type: NodePort
+  ports:
+  - port: 3000
+    targetPort: 3000
+    nodePort: 32000
+    name: grafana
+  selector:
+    app: grafana
