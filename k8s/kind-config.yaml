@@ -1,0 +1,39 @@
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+name: libreria-cluster
+nodes:
+# Control plane node
+- role: control-plane
+  kubeadmConfigPatches:
+  - |
+    kind: InitConfiguration
+    nodeRegistration:
+      kubeletExtraArgs:
+        node-labels: "ingress-ready=true"
+  extraPortMappings:
+  # Frontend
+  - containerPort: 31112
+    hostPort: 31112
+    protocol: TCP
+  # Backend  
+  - containerPort: 32532
+    hostPort: 32532
+    protocol: TCP
+  # Prometheus
+  - containerPort: 30090
+    hostPort: 30090
+    protocol: TCP
+  # Grafana
+  - containerPort: 32000
+    hostPort: 32000
+    protocol: TCP
+# Worker nodes (simula cluster distribuido)
+- role: worker
+  labels:
+    tier: frontend
+- role: worker
+  labels:
+    tier: backend
+- role: worker
+  labels:
+    tier: database

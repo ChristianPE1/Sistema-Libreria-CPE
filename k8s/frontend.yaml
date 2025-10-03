@@ -20,10 +20,20 @@ spec:
       labels:
         app: frontend
     spec:
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            preference:
+              matchExpressions:
+              - key: tier
+                operator: In
+                values:
+                - frontend
       containers:
       - name: frontend
-        image: christianpe/libreria-frontend:latest  # Cambiar por tu imagen
-        imagePullPolicy: IfNotPresent
+        image: libreria-frontend:latest
+        imagePullPolicy: Never
         ports:
         - containerPort: 80
           name: http
@@ -57,10 +67,11 @@ metadata:
   labels:
     app: frontend
 spec:
-  type: LoadBalancer  # Para acceso externo
+  type: NodePort
   ports:
   - port: 80
     targetPort: 80
+    nodePort: 31112
     protocol: TCP
     name: http
   selector:

@@ -2,8 +2,9 @@ apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: postgres-pv
+  namespace: libreria-system
   labels:
-    app: postgres
+    type: local
 spec:
   capacity:
     storage: 5Gi
@@ -11,8 +12,16 @@ spec:
     - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
   storageClassName: manual
-  hostPath:
+  local:
     path: "/data/postgres"
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: tier
+          operator: In
+          values:
+          - database
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim

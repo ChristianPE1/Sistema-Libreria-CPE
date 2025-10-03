@@ -24,6 +24,16 @@ spec:
         prometheus.io/port: "8000"
         prometheus.io/path: "/metrics/"
     spec:
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            preference:
+              matchExpressions:
+              - key: tier
+                operator: In
+                values:
+                - backend
       initContainers:
       - name: wait-for-db
         image: busybox:1.35
