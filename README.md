@@ -4,13 +4,12 @@
 
 ### Características Principales
 
-- **🔐 Sistema de Autenticación**: Registro, login y gestión de usuarios con JWT
-- **👥 Control de Roles**: 3 niveles de acceso (Usuario, Bibliotecario, Admin)
-- **📖 Gestión de Libros**: CRUD completo de libros con información detallada
-- **📝 Sistema de Solicitudes**: Préstamos de libros y solicitudes de más copias
-- **📊 Dashboard Administrativo**: Panel de control para gestión completa
-- **🎨 Interfaz Moderna**: Diseño responsivo con Tailwind CSS
-- **🐳 Containerización**: Despliegue completo con Docker
+- **Sistema de Autenticación**: Registro, login y gestión de usuarios con JWT
+- **Control de Roles**: 3 niveles de acceso (Usuario, Bibliotecario, Admin)
+- **Gestión de Libros**: CRUD completo de libros con información detallada
+- **Sistema de Solicitudes**: Préstamos de libros y solicitudes de más copias
+- **Dashboard Administrativo**: Panel de control para gestión completa
+- **Containerización**: Despliegue completo con Docker
 
 ### Acceso a la Aplicación
 
