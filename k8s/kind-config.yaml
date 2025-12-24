@@ -27,7 +27,7 @@ nodes:
   - containerPort: 32000
     hostPort: 32000
     protocol: TCP
-# Worker nodes (simula cluster distribuido)
+# Worker nodes
 - role: worker
   labels:
     tier: frontend

@@ -56,7 +56,6 @@ api.interceptors.response.use(
          // Disparar evento para actualizar el estado de autenticación
          window.dispatchEvent(new Event('authChanged'));
 
-         // Opcional: redirigir al login
          if (window.location.pathname !== '/login') {
             window.location.href = '/login';
          }

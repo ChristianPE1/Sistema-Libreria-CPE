@@ -1,4 +1,4 @@
-# Correcciones Prometheus y Grafana
+# Prometheus y Grafana
 
 ### Paneles de Grafana 
 

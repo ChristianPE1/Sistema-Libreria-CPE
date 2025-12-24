@@ -2,9 +2,6 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import UserIcon from './svg/userIcon';
 import LoginIcon from './svg/loginIcon';
-//import { ACCESS_TOKEN } from '../constants';
-//import { useEffect, useCallback } from 'react';
-//import { useState } from 'react';
 
 
 export default function NavBar({ isLogged, role }) {
@@ -16,7 +13,6 @@ export default function NavBar({ isLogged, role }) {
       <nav className='bg-neutral-950/90 backdrop-blur-sm border-b border-neutral-800 p-4 sticky top-0 z-50'>
          <div className='container mx-auto max-w-7xl flex flex-row justify-between items-center'>
             
-            {/* Logo */}
             <Link to='/' className='text-2xl font-bold text-white group hover:text-purple-400 transition-colors duration-200'>
                Biblioteca <span className='text-purple-500 group-hover:text-purple-300 transition-colors duration-200'>Virtual</span>
             </Link>
@@ -31,7 +27,6 @@ export default function NavBar({ isLogged, role }) {
                </div>
             )}
             
-            {/* Navigation links */}
             <div className='flex items-center gap-6'>
                {role === 'usuario' && (
                   <Link 
