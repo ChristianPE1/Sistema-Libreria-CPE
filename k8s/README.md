@@ -1,6 +1,6 @@
-# 📚 Sistema de Librería - Kubernetes (Kind)
+# Sistema de Librería - Kubernetes (Kind)
 
-Sistema de gestión de biblioteca desplegado en un cluster Kubernetes multi-nodo usando **Kind** (Kubernetes in Docker), con observabilidad completa mediante **Prometheus** y **Grafana**.
+Sistema de gestión de biblioteca desplegado en un cluster Kubernetes multi-nodo usando **Kind** (Kubernetes in Docker), con observabilidad mediante **Prometheus** y **Grafana**.
 
 ---
 
@@ -68,31 +68,14 @@ graph TB
 
 ---
 
-## ¿Por qué Prometheus y Grafana?
-
 ### **Prometheus** - Sistema de Monitoreo y Alertas
 
-**Ventajas:**
-- **Estándar CNCF**: Proyecto graduado de la Cloud Native Computing Foundation
-- **Modelo Pull**: Scraping activo de métricas, no requiere agentes intrusivos
-- **Service Discovery**: Descubre automáticamente targets en Kubernetes
-- **Alta Disponibilidad**: Diseñado para entornos distribuidos
-
-**Caso de Uso en este Proyecto:**
 - Recolecta métricas del backend Django (requests, latencia, errores)
 - Monitorea recursos del cluster (CPU, memoria, red)
 - Detecta anomalías
 
 ### **Grafana** - Plataforma de Visualización
 
-**Ventajas:**
-- **Dashboards Interactivos**: Visualización clara y personalizable
-- **Multi-datasource**: Soporta Prometheus, PostgreSQL, y más
-- **Alertas Visuales**: Umbrales configurables con notificaciones
-- **Open Source**: Comunidad activa con miles de dashboards prediseñados
-- **Drill-down**: Análisis profundo de métricas en tiempo real
-
-**Caso de Uso en este Proyecto:**
 - Dashboard centralizado del estado del sistema
 - Visualización de performance del backend Django
 - Monitoreo de distribución de pods por nodo
@@ -100,14 +83,6 @@ graph TB
 
 
 ## Inicio Rápido
-
-### Prerrequisitos
-```bash
-# Verificar instalaciones
-docker --version    # v20.10+
-kind version        # v0.20+
-kubectl version     # v1.27+
-```
 
 ### Despliegue Automático
 ```bash
@@ -140,7 +115,7 @@ Este script realiza:
 
 ---
 
-## Comandos Esenciales
+## Comandos
 
 ### Gestión del Sistema
 ```bash
@@ -247,7 +222,7 @@ watch kubectl top pods -n libreria-system
 
 ---
 
-## Comandos Extras
+## Extras
 
 ### Reiniciar componente específico
 ```bash
@@ -260,13 +235,3 @@ kubectl rollout restart deployment/frontend-deployment -n libreria-system
 # Grafana
 kubectl rollout restart deployment/grafana-deployment -n monitoring
 ```
-
-### Cluster corrupto
-```bash
-# Eliminar y recrear
-kind delete cluster --name libreria-cluster
-cd k8s/scripts/
-./setup-kind.sh
-```
-
----

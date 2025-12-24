@@ -1,7 +1,6 @@
 #!/bin/bash
 set -e
 
-# Minimal system verification
 kubectl get nodes -o wide
 echo ""
 kubectl get pods -n libreria-system -o wide
@@ -15,5 +14,3 @@ echo "Grafana: $(curl -sS --max-time 3 http://localhost:32000/api/health >/dev/n
 if kubectl top nodes >/dev/null 2>&1; then
     kubectl top nodes
 fi
-
-echo "verification: done"
